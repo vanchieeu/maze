@@ -71,25 +71,37 @@ void coutMatrix2(char *filename, char *x, int n, int m, int **matrix, bool **che
 }
 
 void result(int n, int m, int **matrix, bool **checkMatrix, int x, int y, int a, int b) {
+    //Thoát nếu đã tới vị trí (n-1, m-1)
     if (x == n-1 && y == m-1) {
         checkMatrix[x][y] = false;
         coutMatrix2("output.txt", "a", n, m, matrix, checkMatrix);
         return;
     }
+
+    //Đánh dấu vị trí là đã đi qua
     checkMatrix[x][y] = false;
     
+    //Đi xuống
     if (x-1>=0)
         if (checkMatrix[x-1][y] && x-1 != a && y != b) 
             result(n, m, matrix, checkMatrix, x-1, y, x, y); 
+        
+    //Đi sang phải
     if (y+1<m)
         if (checkMatrix[x][y+1] && x != a && y+1 != b) 
             result(n, m, matrix, checkMatrix, x, y+1, x, y);
+
+    //Đi sang trái
     if (y-1>=0)
         if (checkMatrix[x][y-1] && x != a && y-1 != b) 
             result(n, m, matrix, checkMatrix, x, y-1, x, y);
+
+    //Đi lên
     if (x+1<n)
         if (checkMatrix[x+1][y] && x+1 != a && y != b) 
             result(n, m, matrix, checkMatrix, x+1, y, x, y);
+
+    //Trả lại vị trí nếu không có cách đi nào thỏa mãn
     checkMatrix[x][y] = true;
 }
 
